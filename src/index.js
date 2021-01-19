@@ -1,20 +1,21 @@
 import {getUsers} from "./users";
 import {ConnectionError} from "./error";
+import {Button} from "./Button";
+import {rendererCreator} from "./renderer";
+
+
+const render = rendererCreator('app');
 
 function app() {
   console.log('app started!');
-
-  const appEl = document.getElementById('app');
-  const btnEl = document.createElement('button');
-  btnEl.textContent = 'Show users';
-  btnEl.addEventListener('click', () => handleShowUsers(appEl))
-  appEl.appendChild(btnEl);
+  const btnEl = Button('Show users', handleShowUsers);
+  render(btnEl);
 }
 
-async function handleShowUsers(appEl) {
+async function handleShowUsers() {
   try {
     const usersData = await getUsers();
-    renderUsers(appEl, usersData);
+    renderUsers(usersData);
   } catch (err) {
     if (err instanceof ConnectionError) {
       console.log('brak polaczenia to jak mam pobrac?', err.message)
@@ -24,10 +25,10 @@ async function handleShowUsers(appEl) {
   }
 }
 
-function renderUsers(appEl, data) {
+function renderUsers(data) {
   const preEl = document.createElement('pre');
   preEl.innerText = JSON.stringify(data, null, 2);
-  appEl.appendChild(preEl);
+  render(preEl);
 }
 
 app();
