@@ -11,18 +11,17 @@ function app() {
   appEl.appendChild(btnEl);
 }
 
-function handleShowUsers(appEl) {
-  getUsers()
-    .then(data => {
-      renderUsers(appEl, data)
-    })
-    .catch(err => {
-      if (err instanceof ConnectionError) {
-        console.log('brak polaczenia to jak mam pobrac?', err.message)
-      } else {
-        console.log(err.message);
-      }
-    })
+async function handleShowUsers(appEl) {
+  try {
+    const usersData = await getUsers();
+    renderUsers(appEl, usersData);
+  } catch (err) {
+    if (err instanceof ConnectionError) {
+      console.log('brak polaczenia to jak mam pobrac?', err.message)
+    } else {
+      console.log(err.message);
+    }
+  }
 }
 
 function renderUsers(appEl, data) {
