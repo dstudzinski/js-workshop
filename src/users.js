@@ -15,6 +15,20 @@ async function getUsers() {
   }
 }
 
+function displayUser(user) {
+  return `${user.name}, ${user.username}, ${user.email}`;
+}
+
+function createUser(name, username, email) {
+  // validate all values
+  return {
+    name,
+    username,
+    email,
+  }
+}
+
 export {
-  getUsers
+  getUsers,
+  displayUser,
 }

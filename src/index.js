@@ -1,4 +1,4 @@
-import {getUsers} from "./users";
+import {displayUser, getUsers} from "./users";
 import {ConnectionError} from "./error";
 import {Button} from "./Button";
 import {rendererCreator} from "./renderer";
@@ -26,8 +26,9 @@ async function handleShowUsers() {
 }
 
 function renderUsers(data) {
+  const dataToShow = data.map(displayUser);
   const preEl = document.createElement('pre');
-  preEl.innerText = JSON.stringify(data, null, 2);
+  preEl.innerText = JSON.stringify(dataToShow, null, 2);
   render(preEl);
 }
 
